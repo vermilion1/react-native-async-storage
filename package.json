@@ -1,0 +1,20 @@
+{
+  "name": "react-native-async-storage",
+  "version": "0.0.0",
+  "description": "An abstraction on top of react-native's AsyncStorage",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vermilion1/react-native-async-storage.git"
+  },
+  "keywords": [
+    "react-native",
+    "AsyncStorage"
+  ],
+  "author": "Vitalii Petrychuk",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vermilion1/react-native-async-storage/issues"
+  },
+  "homepage": "https://github.com/vermilion1/react-native-async-storage#readme"
+}
