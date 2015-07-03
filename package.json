@@ -2,7 +2,7 @@
   "name": "react-native-async-storage",
   "version": "0.0.0",
   "description": "An abstraction on top of react-native's AsyncStorage",
-  "main": "index.js",
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vermilion1/react-native-async-storage.git"
@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/vermilion1/react-native-async-storage/issues"
   },
-  "homepage": "https://github.com/vermilion1/react-native-async-storage#readme"
+  "homepage": "https://github.com/vermilion1/react-native-async-storage/blob/master/README.md",
+  "peerDependencies": {
+    "react-native": ">=0.5.0"
+  }
 }
