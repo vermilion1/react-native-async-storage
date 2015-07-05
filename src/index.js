@@ -14,7 +14,7 @@ class ReactNativeAsyncStorage {
         .then((value) => {
           resolve(new Model(value || "{}", this.save.bind(this, model)));
         })
-        .catch((error) => reject(error.message))
+        .catch(reject);
     });
   }
 
@@ -22,7 +22,7 @@ class ReactNativeAsyncStorage {
     return new Promise((resolve, reject) => {
       AsyncStorage.setItem(model, JSON.stringify(data))
         .then((value) => resolve(value))
-        .catch((error) => reject(error.message))
+        .catch(reject);
     });
   }
 
