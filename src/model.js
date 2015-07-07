@@ -8,6 +8,7 @@ class Model {
     catch (e) {
       throw new Error('Invalid data');
     }
+
     this.save = () => save(this.data);
     this.nextId = Number(Object.keys(this.data)[0]) || -1 + 1;
   }
