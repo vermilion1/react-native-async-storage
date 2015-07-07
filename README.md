@@ -5,7 +5,11 @@ An abstraction on top of react-native's AsyncStorage.
 
 ####TODO
  - Tests
- - update(id:number, data:Object), remove(id:number|Array), clear(), find(criteria:Object)
+ - Add few more methids:
+   - `update(id:number|data:Object, data?:Object)`
+   - `remove(id:number|Array)`
+   - `find(criteria?:Object)`
+   - `clear()`
 
 ####Simple example
 
