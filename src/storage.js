@@ -11,9 +11,7 @@ class ReactNativeAsyncStorage {
   using(model) {
     return new Promise((resolve, reject) => {
       AsyncStorage.getItem(model)
-        .then((value) => {
-          resolve(new Model(value || '{}', this.save.bind(this, model)));
-        })
+        .then((value) => resolve(new Model(value || '{}', this.save.bind(this, model))))
         .catch(reject);
     });
   }

@@ -1,4 +1,4 @@
 {
   "preset": "airbnb",
-  "esprima": "./node_module/esprima-fb"
+  "esprima": "./node_modules/esprima-fb"
 }
