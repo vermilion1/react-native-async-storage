@@ -20,7 +20,7 @@ class Model {
   }
 
   /**
-   * @param id {number|string}
+   * @param id {number}
    * @returns {Object?} Found entry.
    */
   get(id) {
