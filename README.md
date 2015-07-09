@@ -3,14 +3,6 @@ React Native AsyncStorage (WIP)
 
 An abstraction on top of react-native's AsyncStorage.
 
-####TODO
- - Tests
- - Add few more methids:
-   - `update(id:number|data:Object, data?:Object)`
-   - `remove(id:number|Array)`
-   - `find(criteria?:Object)`
-   - `clear()`
-
 ####Simple example
 
     ReactNativeAsyncStorage.using('model_name')

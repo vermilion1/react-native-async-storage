@@ -1,6 +1,12 @@
 'use strict';
 
 class Model {
+
+  /**
+   * @constructor
+   * @param data {string}
+   * @param save {function}
+   */
   constructor(data, save) {
     try {
       this.data = JSON.parse(data);
@@ -13,24 +19,83 @@ class Model {
     this.nextId = Number(Object.keys(this.data)[0]) || -1 + 1;
   }
 
+  /**
+   * @param id {number|string}
+   * @returns {Object?} Found entry.
+   */
   get(id) {
     return this.data[id];
   }
 
-  add(entries) {
-    if (!Array.isArray(entries)) {
-      entries = [entries];
-    }
+  /**
+   * @param entry {Object|Array<Object>}
+   * @returns {number|Array<number>} Added entry id.
+   */
+  add(entry) {
+    var isArray = Array.isArray(entry);
+    var entries = isArray ? entry : [entry];
 
-    return entries.map((entry) => {
+    // TODO: return number if entry is not array
+
+    var ids = entries.map((entry) => {
       var id = entry._id = this.nextId;
       this.data[id] = entry;
       this.nextId += 1;
       return id;
     });
+
+    return isArray ? ids : ids[0];
   }
 
-  find() {
+  /**
+   * @param id {number|Object}
+   * @param data {Object?}
+   * @returns {number} Updated entry id.
+   */
+  update(id, data) {
+    if (data === void 0) {
+      data = id;
+      id = data._id;
+    }
+
+    // TODO: update logic here
+
+    return id;
+  }
+
+  /**
+   * @param id {number|Array<number>}
+   * @returns {number|Array<number>} Updated entry id.
+   */
+  remove(id) {
+    var isArray = Array.isArray(id);
+    var ids = isArray ? id : [id];
+
+    // TODO: remove logic here
+
+    return isArray ? ids : id;
+  }
+
+  /**
+   * @returns {Array<number?>} List of ids.
+   */
+  clear() {
+
+    // TODO: clear the model
+
+    return [];
+  }
+
+  /**
+   * @param criteria {Object?}
+   * @returns {Array<Object?>}
+   */
+  find(criteria) {
+    if (criteria) {
+
+      // TODO: find by some criteria
+
+    }
     return Object.keys(this.data).map(key => this.data[key]);
   }
 
