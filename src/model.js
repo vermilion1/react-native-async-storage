@@ -9,7 +9,7 @@ class Model {
    */
   constructor(data, save) {
     try {
-      this.data = JSON.parse(data);
+      this.data = JSON.parse(data) || {};
     }
     catch (e) {
       throw new Error('Invalid data');
