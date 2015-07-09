@@ -16,12 +16,12 @@ class Model {
     }
 
     this.save = () => save(this.data);
-    this.nextId = Number(Object.keys(this.data)[0]) || -1 + 1;
+    this.nextId = Math.max.apply(Math, Object.keys(this.data).concat([-1])) + 1;
   }
 
   /**
    * @param id {number}
-   * @returns {Object?} Found entry.
+   * @returns {Object|undefined} Found entry.
    */
   get(id) {
     return this.data[id];
@@ -46,7 +46,7 @@ class Model {
 
   /**
    * @param id {number|Object}
-   * @param data {Object?}
+   * @param data {Object|undefined}
    * @returns {number} Updated entry id.
    */
   update(id, data) {
@@ -78,25 +78,42 @@ class Model {
   }
 
   /**
-   * @returns {Array<number?>} List of ids.
+   * @returns {Array<number>} List of ids.
    */
   clear() {
     var ids = Object.keys(this.data);
     this.data = {};
+
     return ids;
   }
 
   /**
-   * @param criteria {Object?}
-   * @returns {Array<Object?>}
+   * @param criteria {Object|undefined}
+   * @returns {Array<Object>}
    */
   find(criteria) {
+    var data = this.data;
+    var keys = Object.keys(data);
+
     if (criteria) {
+      var result = [];
 
-      // TODO: find by some criteria
+      keys.forEach(function(key) {
+        var entry = data[key];
+        for (var prop in criteria) {
+          if (criteria.hasOwnProperty(prop)) {
+            if (entry[prop] === criteria[prop]) {
+              result.push(entry);
+              break;
+            }
+          }
+        }
+      });
 
+      return result;
     }
-    return Object.keys(this.data).map(key => this.data[key]);
+
+    return keys.map(key => data[key]);
   }
 
 }

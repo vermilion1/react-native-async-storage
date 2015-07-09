@@ -7,10 +7,6 @@ var noop = function() {};
 
 describe('Model', function() {
 
-  beforeEach(function() {
-    this.model = new Model('{}', noop);
-  });
-
   describe('constructor', function() {
 
     it('should parse input data', function() {
@@ -24,21 +20,40 @@ describe('Model', function() {
     });
 
     it('should throw the error in case input data isn\'t valid', function() {
-      expect(function () { new Model('', noop) }).toThrow(new Error('Invalid data'));
-      expect(function () { new Model('{a: b}', noop) }).toThrow(new Error('Invalid data'));
+      expect(function() { new Model('', noop) }).toThrow('Invalid data');
+      expect(function() { new Model('{a: b}', noop) }).toThrow('Invalid data');
     });
 
     it('should create save method', function() {
-      // TODO: add test
+      var saveMock = jest.genMockFunction();
+      var model = new Model('{"a": 1, "b": [2]}', saveMock);
+
+      model.save();
+
+      expect(saveMock).toBeCalledWith({a: 1, b: [2]});
     });
 
     it('should create next id property', function() {
-      // TODO: add test
+      var model1 = new Model('{}', noop);
+      var model2 = new Model('{"1": {}}', noop);
+      var model3 = new Model('{"8": {}, "2": {}}', noop);
+      var model4 = new Model('{}', noop);
+
+      model4.add([{}, {}, {}, {}]);
+
+      expect(model1.nextId).toBe(0);
+      expect(model2.nextId).toBe(2);
+      expect(model3.nextId).toBe(9);
+      expect(model4.nextId).toBe(4);
     });
 
   });
 
   describe('get method', function() {
+
+    beforeEach(function() {
+      this.model = new Model('{}', noop);
+    });
 
     it('should return entry by its id', function() {
       var id = this.model.add({});
