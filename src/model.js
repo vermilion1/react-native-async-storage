@@ -34,9 +34,6 @@ class Model {
   add(entry) {
     var isArray = Array.isArray(entry);
     var entries = isArray ? entry : [entry];
-
-    // TODO: return number if entry is not array
-
     var ids = entries.map((entry) => {
       var id = entry._id = this.nextId;
       this.data[id] = entry;
@@ -58,7 +55,8 @@ class Model {
       id = data._id;
     }
 
-    // TODO: update logic here
+    data._id = id;
+    this.data[id] = data;
 
     return id;
   }
@@ -70,8 +68,11 @@ class Model {
   remove(id) {
     var isArray = Array.isArray(id);
     var ids = isArray ? id : [id];
+    var data = this.data;
 
-    // TODO: remove logic here
+    ids.forEach(function(id) {
+      delete data[id];
+    });
 
     return isArray ? ids : id;
   }
@@ -80,10 +81,9 @@ class Model {
    * @returns {Array<number?>} List of ids.
    */
   clear() {
-
-    // TODO: clear the model
-
-    return [];
+    var ids = Object.keys(this.data);
+    this.data = {};
+    return ids;
   }
 
   /**
