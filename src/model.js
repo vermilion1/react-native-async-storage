@@ -85,7 +85,7 @@ class Model {
    * @returns {Array<number>} List of ids.
    */
   clear() {
-    var ids = Object.keys(this.data);
+    var ids = Object.keys(this.data).map(Number);
     this.data = {};
 
     return ids;

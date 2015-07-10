@@ -147,7 +147,31 @@ describe('Model', function() {
   });
 
   describe('clear method', function() {
-    // TODO: add tests
+
+    beforeEach(function() {
+      this.model1 = new Model('{}', noop);
+      this.model2 = new Model('{"0": {}, "1": {"bar": 1}}', noop);
+      this.model3 = new Model('{"6": {}}', noop);
+    });
+
+    it('should clear all entities', function() {
+      this.model1.clear();
+      this.model2.clear();
+      this.model3.clear();
+      this.model3.add({});
+      this.model3.clear();
+
+      expect(Object.keys(this.model1.data).length).toBe(0);
+      expect(Object.keys(this.model2.data).length).toBe(0);
+      expect(Object.keys(this.model3.data).length).toBe(0);
+    });
+
+    it('should return ids of the cleared entities', function() {
+      expect(this.model1.clear()).toEqual([]);
+      expect(this.model2.clear()).toEqual([0, 1]);
+      expect(this.model3.clear()).toEqual([6]);
+    });
+
   });
 
   describe('find method', function() {
