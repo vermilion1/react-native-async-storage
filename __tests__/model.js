@@ -65,7 +65,52 @@ describe('Model', function() {
   });
 
   describe('add method', function() {
-    // TODO: add tests
+
+    beforeEach(function() {
+      this.model = new Model('{}', noop);
+    });
+
+    it('should add single entry', function() {
+      var entry1 = {a: 1};
+      var entry2 = {a: 2};
+
+      this.model.add(entry1);
+      this.model.add(entry2);
+
+      expect(Object.keys(this.model.data).length).toBe(2);
+      expect(this.model.data[0]).toEqual(entry1);
+      expect(this.model.data[1]).toEqual(entry2);
+    });
+
+    it('should return an id of a single added entry', function() {
+      var id0 = this.model.add({a: 1});
+      var id1 = this.model.add({a: 2});
+
+      expect(id0).toBe(0);
+      expect(id1).toBe(1);
+    });
+
+    it('should add multiple entries at once', function() {
+      var entries1 = [{a: 1}];
+      var entries2 = [{a: 2}, {a: 3}];
+
+      this.model.add(entries1);
+      this.model.add(entries2);
+
+      expect(Object.keys(this.model.data).length).toBe(3);
+      expect(this.model.data[0]).toEqual(entries1[0]);
+      expect(this.model.data[1]).toEqual(entries2[0]);
+      expect(this.model.data[2]).toEqual(entries2[1]);
+    });
+
+    it('should return ids of a multiple added entries', function() {
+      var ids0 = this.model.add([{a: 1}]);
+      var ids1 = this.model.add([{a: 2}, {a: 3}]);
+
+      expect(ids0).toEqual([0]);
+      expect(ids1).toEqual([1, 2]);
+    });
+
   });
 
   describe('update method', function() {
