@@ -46,13 +46,17 @@ class Model {
 
   /**
    * @param id {number|Object}
-   * @param data {Object|undefined}
+   * @param [data] {Object}
    * @returns {number} Updated entry id.
    */
   update(id, data) {
     if (data === void 0) {
       data = id;
       id = data._id;
+    }
+
+    if (id == null) {
+      throw new Error('id is not specified');
     }
 
     data._id = id;
@@ -88,7 +92,7 @@ class Model {
   }
 
   /**
-   * @param criteria {Object|undefined}
+   * @param [criteria] {Object}
    * @returns {Array<Object>}
    */
   find(criteria) {

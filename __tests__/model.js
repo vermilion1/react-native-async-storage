@@ -3,7 +3,7 @@
 jest.dontMock('../src/model');
 
 var Model = require('../src/model');
-var noop = function() {};
+var noop = () => void 0;
 
 describe('Model', function() {
 
@@ -20,8 +20,8 @@ describe('Model', function() {
     });
 
     it('should throw the error in case input data isn\'t valid', function() {
-      expect(function() { new Model('', noop) }).toThrow('Invalid data');
-      expect(function() { new Model('{a: b}', noop) }).toThrow('Invalid data');
+      expect(() => new Model('', noop)).toThrow('Invalid data');
+      expect(() => new Model('{a: b}', noop)).toThrow('Invalid data');
     });
 
     it('should create save method', function() {
@@ -114,7 +114,32 @@ describe('Model', function() {
   });
 
   describe('update method', function() {
-    // TODO: add tests
+
+    beforeEach(function() {
+      this.model = new Model('{"0": {}, "1": {"bar": 1}}', noop);
+    });
+
+    it('should update by id', function() {
+      this.model.update(0, {foo: 'bar'});
+      this.model.update(1, {bar: 'baz'});
+
+      expect(this.model.get(0)).toEqual({_id: 0, foo: 'bar'});
+      expect(this.model.get(1)).toEqual({_id: 1, bar: 'baz'});
+    });
+
+    it('should update an object', function() {
+      this.model.update({_id: 0, foo: 'bar'});
+      this.model.update({_id: 1, bar: 'baz'});
+
+      expect(this.model.get(0)).toEqual({_id: 0, foo: 'bar'});
+      expect(this.model.get(1)).toEqual({_id: 1, bar: 'baz'});
+    });
+
+    it('should throw an error if id is not specified', function() {
+      expect(() => this.model.update({a: 1})).toThrow('id is not specified');
+      expect(() => this.model.update(null, {a: 1})).toThrow('id is not specified');
+    });
+
   });
 
   describe('remove method', function() {
