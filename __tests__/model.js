@@ -19,7 +19,7 @@ describe('Model', function() {
       expect(model3.data).toEqual({b: [1, '2']});
     });
 
-    it('should throw the error in case input data isn\'t valid', function() {
+    it('should throw the error in case input data is not valid', function() {
       expect(() => new Model('', noop)).toThrow('Invalid data');
       expect(() => new Model('{a: b}', noop)).toThrow('Invalid data');
     });
@@ -214,7 +214,30 @@ describe('Model', function() {
   });
 
   describe('find method', function() {
-    // TODO: add tests
+
+    beforeEach(function() {
+      this.model1 = new Model('{}', noop);
+      this.model2 = new Model('{"0": {}, "1": {"bar": 1}}', noop);
+      this.model3 = new Model('{"6": {"_id": 6, "foo": "bar"}, "9": {"prop": "value"}}', noop);
+    });
+
+    it('should return all entries if criteria is not specified', function() {
+      expect(this.model1.find()).toEqual([]);
+      expect(this.model2.find()).toEqual([{}, {bar: 1}]);
+      expect(this.model3.find()).toEqual([{_id: 6, foo: 'bar'}, {prop: 'value'}]);
+    });
+
+    it('should return matched entries', function() {
+      expect(this.model1.find({a: 1})).toEqual([]);
+      expect(this.model2.find({a: 1})).toEqual([]);
+      expect(this.model3.find({a: 1})).toEqual([]);
+
+      expect(this.model2.find({bar: 1})).toEqual([{bar: 1}]);
+      expect(this.model3.find({_id: 6})).toEqual([{_id: 6, foo: 'bar'}]);
+      expect(this.model3.find({foo: 'bar'})).toEqual([{_id: 6, foo: 'bar'}]);
+      expect(this.model3.find({prop: 'value'})).toEqual([{prop: 'value'}]);
+    });
+
   });
 
 });
