@@ -35,7 +35,7 @@ class Model {
     var isArray = Array.isArray(entry);
     var entries = isArray ? entry : [entry];
     var ids = entries.map((entry) => {
-      var id = entry._id = this.nextId;
+      var id = entry.id = this.nextId;
       this.data[id] = entry;
       this.nextId += 1;
       return id;
@@ -52,14 +52,14 @@ class Model {
   update(id, data) {
     if (data === void 0) {
       data = id;
-      id = data._id;
+      id = data.id;
     }
 
     if (id == null) {
       throw new Error('id is not specified');
     }
 
-    data._id = id;
+    data.id = id;
     this.data[id] = data;
 
     return id;

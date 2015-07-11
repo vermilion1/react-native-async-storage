@@ -59,7 +59,7 @@ describe('Model', function() {
       var id = this.model.add({});
       var insertedEntry = this.model.get(id);
 
-      expect(id).toEqual(insertedEntry._id);
+      expect(id).toEqual(insertedEntry.id);
     });
 
   });
@@ -123,16 +123,16 @@ describe('Model', function() {
       this.model.update(0, {foo: 'bar'});
       this.model.update(1, {bar: 'baz'});
 
-      expect(this.model.get(0)).toEqual({_id: 0, foo: 'bar'});
-      expect(this.model.get(1)).toEqual({_id: 1, bar: 'baz'});
+      expect(this.model.get(0)).toEqual({id: 0, foo: 'bar'});
+      expect(this.model.get(1)).toEqual({id: 1, bar: 'baz'});
     });
 
     it('should update an object', function() {
-      this.model.update({_id: 0, foo: 'bar'});
-      this.model.update({_id: 1, bar: 'baz'});
+      this.model.update({id: 0, foo: 'bar'});
+      this.model.update({id: 1, bar: 'baz'});
 
-      expect(this.model.get(0)).toEqual({_id: 0, foo: 'bar'});
-      expect(this.model.get(1)).toEqual({_id: 1, bar: 'baz'});
+      expect(this.model.get(0)).toEqual({id: 0, foo: 'bar'});
+      expect(this.model.get(1)).toEqual({id: 1, bar: 'baz'});
     });
 
     it('should throw an error if id is not specified', function() {
@@ -218,13 +218,13 @@ describe('Model', function() {
     beforeEach(function() {
       this.model1 = new Model('{}', noop);
       this.model2 = new Model('{"0": {}, "1": {"bar": 1}}', noop);
-      this.model3 = new Model('{"6": {"_id": 6, "foo": "bar"}, "9": {"prop": "value"}}', noop);
+      this.model3 = new Model('{"6": {"id": 6, "foo": "bar"}, "9": {"prop": "value"}}', noop);
     });
 
     it('should return all entries if criteria is not specified', function() {
       expect(this.model1.find()).toEqual([]);
       expect(this.model2.find()).toEqual([{}, {bar: 1}]);
-      expect(this.model3.find()).toEqual([{_id: 6, foo: 'bar'}, {prop: 'value'}]);
+      expect(this.model3.find()).toEqual([{id: 6, foo: 'bar'}, {prop: 'value'}]);
     });
 
     it('should return matched entries', function() {
@@ -233,8 +233,8 @@ describe('Model', function() {
       expect(this.model3.find({a: 1})).toEqual([]);
 
       expect(this.model2.find({bar: 1})).toEqual([{bar: 1}]);
-      expect(this.model3.find({_id: 6})).toEqual([{_id: 6, foo: 'bar'}]);
-      expect(this.model3.find({foo: 'bar'})).toEqual([{_id: 6, foo: 'bar'}]);
+      expect(this.model3.find({id: 6})).toEqual([{id: 6, foo: 'bar'}]);
+      expect(this.model3.find({foo: 'bar'})).toEqual([{id: 6, foo: 'bar'}]);
       expect(this.model3.find({prop: 'value'})).toEqual([{prop: 'value'}]);
     });
 
