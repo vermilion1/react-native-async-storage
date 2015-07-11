@@ -77,12 +77,12 @@ describe('Model', function() {
       this.model.add(entry1);
       this.model.add(entry2);
 
-      expect(Object.keys(this.model.data).length).toBe(2);
+      expect(Object.keys(this.model.find()).length).toBe(2);
       expect(this.model.data[0]).toEqual(entry1);
       expect(this.model.data[1]).toEqual(entry2);
     });
 
-    it('should return an id of a single added entry', function() {
+    it('should return an id of the single added entry', function() {
       var id0 = this.model.add({a: 1});
       var id1 = this.model.add({a: 2});
 
@@ -97,13 +97,13 @@ describe('Model', function() {
       this.model.add(entries1);
       this.model.add(entries2);
 
-      expect(Object.keys(this.model.data).length).toBe(3);
+      expect(Object.keys(this.model.find()).length).toBe(3);
       expect(this.model.data[0]).toEqual(entries1[0]);
       expect(this.model.data[1]).toEqual(entries2[0]);
       expect(this.model.data[2]).toEqual(entries2[1]);
     });
 
-    it('should return ids of a multiple added entries', function() {
+    it('should return ids of the multiple added entries', function() {
       var ids0 = this.model.add([{a: 1}]);
       var ids1 = this.model.add([{a: 2}, {a: 3}]);
 
@@ -143,7 +143,46 @@ describe('Model', function() {
   });
 
   describe('remove method', function() {
-    // TODO: add tests
+
+    beforeEach(function() {
+      this.model = new Model('{"0": {}, "1": {"bar": 1}, "2": {}, "3": {}}', noop);
+    });
+
+    it('should remove entity by its id', function() {
+      this.model.remove(0);
+      this.model.remove(1);
+
+      expect(this.model.get(0)).toBe(void 0);
+      expect(this.model.get(1)).toBe(void 0);
+      expect(Object.keys(this.model.find()).length).toBe(2);
+    });
+
+    it('should return an id of the removed entity', function() {
+      var id1 = this.model.remove(1);
+      var id2 = this.model.remove(2);
+
+      expect(id1).toBe(1);
+      expect(id2).toBe(2);
+    });
+
+    it('should remove multiple entities at once', function() {
+      this.model.remove([0, 1]);
+      this.model.remove([3]);
+
+      expect(this.model.get(0)).toBe(void 0);
+      expect(this.model.get(1)).toBe(void 0);
+      expect(this.model.get(3)).toBe(void 0);
+      expect(Object.keys(this.model.find()).length).toBe(1);
+    });
+
+    it('should return ids of the multiple removed entries', function() {
+      var ids1 = this.model.remove([0, 1]);
+      var ids2 = this.model.remove([3]);
+
+      expect(ids1).toEqual([0, 1]);
+      expect(ids2).toEqual([3]);
+    });
+
   });
 
   describe('clear method', function() {
